@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang ="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Live Chat</title>
+        <!-- this uses the Jinja syntax; which is declared when {{}} for what to put in the python file; it doesn't hardcode anything -->
+        <link rel="stylesheet" 
+        href="{{url_for('static', filename = 'css/style.css')}}"
+        />
+        <!-- this is a java script tag which loads the socket and allows us to communicate with the backend socket into the actual HTML webpage-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <!-- A block is a reusable section of our code which can be overridden by the child templates of other blocks-->
+        <div class="content">
+            {%block content%}
+            {%endblock%}
+        </div>
+    </body>
+</html>
