@@ -1,0 +1,26 @@
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    gap: 10px; 
+}
+
+
+.join {
+    /*This is turns the HTML container into a flex box that makes it easier to space out and organize things inside a container.*/ 
+    display: flex; 
+    /* This tells which way to line up items inside the container */
+    flex-direction: column; 
+    width: 100%
+}
+.create-btn {
+    width: 100%
+}
