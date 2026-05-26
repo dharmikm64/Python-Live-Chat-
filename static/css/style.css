@@ -1,6 +1,7 @@
 .content {
     display: flex;
     align-items: center;
+    /* This centers the layout used with the flexbox to align the items in the middle of the container along the main axis. */
     justify-content: center;
 }
 
