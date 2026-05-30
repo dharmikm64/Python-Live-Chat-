@@ -63,6 +63,11 @@ def home():
 
 @app.route("/room")
 def room():
+    #this result store the value in the variable room; and if the user has not selected a room then it returns None
+    room = session.get("room")
+    #if any of the conditions checked in the statement below are false then it redirects to the home page 
+    if room is None or session.get("name") is None or room not in rooms: 
+        return redirect(url_for("home"))
     return render_template("room.html")
 
 #this makes sure that the server is starting if you are running it directly in the Python file 

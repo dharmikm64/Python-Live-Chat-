@@ -25,3 +25,39 @@
 .create-btn {
     width: 100%
 }
+
+.message-box {
+    border-color: blue;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    /* vh stands for vertical height */
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    /* vw stands for vertical width */
+    width: 80vw ;
+    /* This makes the items inside the container to stretch out and fill the entire height of that container */
+    align-items: stretch;
+}
+
+.messages {
+    /* This allows for the messages to be scrollable if the texts exceed the height of the div box */
+    overflow-y: scroll;
+    flex: 1;
+    width: 100%;
+}
+
+.inputs {
+    padding: 10px;
+    display: flex;
+}
+
+h2{
+    text-align: center;
+}
+
+#message {
+    flex: 1;
+}
