@@ -68,7 +68,51 @@ def room():
     #if any of the conditions checked in the statement below are false then it redirects to the home page 
     if room is None or session.get("name") is None or room not in rooms: 
         return redirect(url_for("home"))
-    return render_template("room.html")
+    return render_template("room.html", code = room, message=rooms[room]["messages"])
+
+@socketio.on("message")
+def message(data):
+    room = session.get("room")
+    if room not in rooms: 
+        return 
+    
+    content = {
+        "name" : session.get("name"),
+        "message" : data["data"]
+    }
+    send(content, to=room) #this sends the message to everyone in the room 
+    rooms[room]["messages"].append(content) #the messages add; so there is a history of all the messages in the room;if you refresh the page the history will be gone because it is stored in ram and not a database  
+    print(f"{session.get('name')} said: {data['data']}")
+
+@socketio.on("connect") #this is a decorator that tells the server; when a client connects to a new websocket it plays the function below 
+def connect(auth): 
+    room = session.get("room")
+    name = session.get("name")
+
+    if not room or not name:
+        return 
+    if room not in rooms: 
+        leave_room(room)
+        return 
+    
+    join_room(room)
+    #the send function sends a JSON messgage to the client; and the to=room addition makes sure that the message is sent to everyone in the room 
+    send({"name": name, "message": "has entered the room"}, to=room)
+    rooms[room]["members"] += 1
+    print(f"{name} joined room {room}") #this is only for debugging purposes; won't be displayed anywhere 
+    
+@socketio.on("disconnect")
+def disconnect():
+    room = session.get("room")
+    name = session.get("name")
+    leave_room(room)
+    if room in rooms: 
+        rooms[room]["members"] -= 1
+        if rooms[room]["members"] <= 0:
+            del rooms[room]
+    send({"name": name, "message": "has left the room"}, to=room)
+    print(f"{name} has left the room {room}") #this is only for debugging purposes; won't be displayed anywhere 
+
 
 #this makes sure that the server is starting if you are running it directly in the Python file 
 if __name__ == "__main__" :
